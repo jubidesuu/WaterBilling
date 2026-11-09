@@ -37,7 +37,7 @@ exports.createWaterBill = (req, res) => {
     `INSERT INTO water_bills
       (meter_number, consumer_name, cubic_meters_used, total_amount, status)
       VALUES (?, ?, ?, ?, ?)`,
-    [meter_number, consumer_name, cubic_meters_used, total_amount, status],
+    [meter, consumer, cubic, total, status],
     (err) => {
       if (err) {
         console.error(err);
