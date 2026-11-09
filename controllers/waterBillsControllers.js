@@ -57,12 +57,12 @@ exports.createWaterBill = (req, res) => {
 // PUT - Update a water bill
 exports.updateWaterBill = (req, res) => {
   //const meter_number = req.params.meter_number;
-  const { consumer_name, cubic_meters_used, total_amount, status,meter_number } = req.body;
+  const { consumer, cubic, total, status,meter } = req.body;
 
   connection.query(
     `UPDATE water_bills SET consumer_name = ?, cubic_meters_used = ?,
       total_amount = ?, status = ? WHERE meter_number = ?`,
-    [consumer_name, cubic_meters_used, total_amount, status, meter_number],
+    [consumer, cubic, total, status, meter],
     (err, result) => {
       if (err) {
         console.error(err);
