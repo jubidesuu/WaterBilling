@@ -38,21 +38,11 @@ exports.createWaterBill = (req, res) => {
       (meter_number, consumer_name, cubic_meters_used, total_amount, status)
       VALUES (?, ?, ?, ?, ?)`,
     [meter, consumer, cubic, total, status],
-    (err) => {
-      if (err) {
-        console.error(err);
-        if (err.code === "ER_DUP_ENTRY") {
-          return res.status(409).json({ message: "Meter number already exists" });
-        }
-        return res.status(500).json({ message: "Error creating water bill" });
-      }
-      res.status(201).json({
-        message: "Water bill created successfully",
-        meter_number,
-      });
-    }
-  );
-};
+    (err,result)=>{
+        if(err) throw err;
+        res.json({message:'User created successfully',id:result.insertId});
+    });
+}
 
 // PUT - Update a water bill
 exports.updateWaterBill = (req, res) => {
@@ -63,20 +53,14 @@ exports.updateWaterBill = (req, res) => {
     `UPDATE water_bills SET consumer_name = ?, cubic_meters_used = ?,
       total_amount = ?, status = ? WHERE meter_number = ?`,
     [consumer, cubic, total, status, meter],
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Error updating water bill" });
-      }
-      if (result.affectedRows > 0) {
-        res.json({ message: "Water bill updated successfully" });
-      } else {
-        res.status(404).json({ message: "Water bill not found" });
-      }
-    }
-  );
-};
-
+    (err,result)=>{
+        if(err) throw err;
+        if(result.affectedRows>0)
+            res.json({message:'User updated successfully'});
+        else
+            res.status(404).json({message:'User not found'});
+});
+}
 // DELETE - Delete a water bill
 exports.deleteWaterBill = (req, res) => {
   const meter_number = req.params.meter_number;
