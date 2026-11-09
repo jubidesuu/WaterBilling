@@ -31,7 +31,7 @@ exports.getAllWaterBills = (req, res) => {
 
 // POST - Create a new water bill
 exports.createWaterBill = (req, res) => {
-  const { meter_number, consumer_name, cubic_meters_used, total_amount, status } = req.body;
+  const { meter, consumer, cubic, total, status } = req.body;
 
   connection.query(
     `INSERT INTO water_bills
