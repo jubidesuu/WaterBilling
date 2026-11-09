@@ -3,11 +3,8 @@ const connection = require("../config/db");
 // GET - Get all water bills
 exports.getAllWaterBills = (req, res) => {
   connection.query("SELECT * FROM water_bills", (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Database query failed" });
-    }
-    res.json(rows);
+     if (err) throw err;
+        res.json(rows);
   });
 };
 
